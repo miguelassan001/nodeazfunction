@@ -1,0 +1,51 @@
+ERROR:
+https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.server.kestrel.core.kestrelserverlimits.maxrequestbodysize?view=aspnetcore-3.1
+
+
+TEST:
+# curl -s -w "%{http_code} " -X POST "https://docconverter-dev9326307779-apidoc.azurewebsites.net/lool/convert-to?format=pdf" -H "Authorization: Bearer $TOKEN" -H  "accept: application/octet-stream" -H  "Content-Type: multipart/form-data" --form "data=@32MB.docx;type=application/vnd.openxmlformats-officedocument.wordprocessingml.document" --output /tmp/file-$(date +%s).pdf
+500 #  
+
+
+
+APP_SERVICE_LOG_STREAM:
+2020-06-10T11:11:31.123170190Z: [INFO]  [41m[30mfail[39m[22m[49m: Middleware[0]
+2020-06-10T11:11:31.123230990Z: [INFO]        Unhandled exception in request pipeline: System.Net.Http.HttpRequestException: Error while copying content to a stream.
+2020-06-10T11:11:31.124112796Z: [INFO]         ---> Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException: Request body too large.
+2020-06-10T11:11:31.124133196Z: [INFO]           at Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException.Throw(RequestRejectionReason reason)
+2020-06-10T11:11:31.124158496Z: [INFO]           at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.OnReadStarting()
+2020-06-10T11:11:31.124923002Z: [INFO]           at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.MessageBody.TryStart()
+2020-06-10T11:11:31.124943202Z: [INFO]           at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.ReadAsyncInternal(CancellationToken cancellationToken)
+2020-06-10T11:11:31.125463205Z: [INFO]           at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.CopyToAsyncInternal(Stream destination, CancellationToken cancellationToken)
+2020-06-10T11:11:31.125482405Z: [INFO]           at System.Net.Http.HttpContent.CopyToAsyncCore(ValueTask copyTask)
+2020-06-10T11:11:31.126076409Z: [INFO]           --- End of inner exception stack trace ---
+2020-06-10T11:11:31.126096409Z: [INFO]           at System.Net.Http.HttpContent.CopyToAsyncCore(ValueTask copyTask)
+2020-06-10T11:11:31.126106709Z: [INFO]           at System.Net.Http.HttpConnection.SendRequestContentAsync(HttpRequestMessage request, HttpContentWriteStream stream, CancellationToken cancellationToken)
+2020-06-10T11:11:31.126460212Z: [INFO]           at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+2020-06-10T11:11:31.126747414Z: [INFO]           at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+2020-06-10T11:11:31.126766714Z: [INFO]           at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+2020-06-10T11:11:31.127114016Z: [INFO]           at System.Net.Http.DiagnosticsHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+2020-06-10T11:11:31.127133416Z: [INFO]           at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered(Task`1 sendTask, HttpRequestMessage request, CancellationTokenSource cts, Boolean disposeCts)
+2020-06-10T11:11:31.127432518Z: [INFO]           at Microsoft.Azure.AppService.MiddlewareShim.Startup.ForwardRequestAsync(HttpContext context) in /EasyAuth/Middleware.Host/Startup.cs:line 197
+2020-06-10T11:11:31.127688120Z: [INFO]           at Microsoft.Azure.AppService.MiddlewareShim.Startup.OnRequest(HttpContext context) in /EasyAuth/Middleware.Host/Startup.cs:line 151
+2020-06-10T11:11:31.128028022Z: [INFO]  [41m[30mfail[39m[22m[49m: Microsoft.AspNetCore.Server.Kestrel[13]
+2020-06-10T11:11:31.128061522Z: [INFO]        Connection id "0HM0D5ONEMUN9", Request id "0HM0D5ONEMUN9:00000001": An unhandled exception was thrown by the application.
+2020-06-10T11:11:31.128352224Z: [INFO]  System.Net.Http.HttpRequestException: Error while copying content to a stream.
+2020-06-10T11:11:31.128370924Z: [INFO]   ---> Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException: Request body too large.
+2020-06-10T11:11:31.128381324Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException.Throw(RequestRejectionReason reason)
+2020-06-10T11:11:31.128734627Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.OnReadStarting()
+2020-06-10T11:11:31.128753727Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.MessageBody.TryStart()
+2020-06-10T11:11:31.132762953Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.ReadAsyncInternal(CancellationToken cancellationToken)
+2020-06-10T11:11:31.132787854Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.CopyToAsyncInternal(Stream destination, CancellationToken cancellationToken)
+2020-06-10T11:11:31.133259257Z: [INFO]     at System.Net.Http.HttpContent.CopyToAsyncCore(ValueTask copyTask)
+2020-06-10T11:11:31.133277957Z: [INFO]     --- End of inner exception stack trace ---
+2020-06-10T11:11:31.133288757Z: [INFO]     at System.Net.Http.HttpContent.CopyToAsyncCore(ValueTask copyTask)
+2020-06-10T11:11:31.134050762Z: [INFO]     at System.Net.Http.HttpConnection.SendRequestContentAsync(HttpRequestMessage request, HttpContentWriteStream stream, CancellationToken cancellationToken)
+2020-06-10T11:11:31.134071562Z: [INFO]     at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+2020-06-10T11:11:31.141846413Z: [INFO]     at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+2020-06-10T11:11:31.141873314Z: [INFO]     at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+2020-06-10T11:11:31.142251916Z: [INFO]     at System.Net.Http.DiagnosticsHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+2020-06-10T11:11:31.142271316Z: [INFO]     at System.Net.Http.HttpClient.FinishSendAsyncUnbuffered(Task`1 sendTask, HttpRequestMessage request, CancellationTokenSource cts, Boolean disposeCts)
+2020-06-10T11:11:31.142540218Z: [INFO]     at Microsoft.Azure.AppService.MiddlewareShim.Startup.ForwardRequestAsync(HttpContext context) in /EasyAuth/Middleware.Host/Startup.cs:line 197
+2020-06-10T11:11:31.142778720Z: [INFO]     at Microsoft.Azure.AppService.MiddlewareShim.Startup.OnRequest(HttpContext context) in /EasyAuth/Middleware.Host/Startup.cs:line 151
+2020-06-10T11:11:31.142797120Z: [INFO]     at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
